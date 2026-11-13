@@ -4390,7 +4390,7 @@ function stepDone(cur,s){ const order=["envoyee","vue","acceptee"]; if(cur==="re
 function viewAlt(){
   $("#app").innerHTML=`
   <div class="page-head g altpage"><span class="kicker">ALT · le média d’Underwave</span><h1>Faites parler de votre projet</h1>
-  <p>ALT est le média indépendant musique et culture porté par Underwave. Si votre projet a trouvé son lieu grâce à Espaces Partagés, ou si vous voulez simplement nous le présenter, écrivez-nous : relais, annonce, interview sur ALT FM, ALT Sessions, article…</p>
+  <p>Votre projet a trouvé son lieu grâce à Espaces Partagés ? Présentez-le à ALT, le média d’Underwave.</p>
   <div class="row-btns" style="margin-top:20px"><button class="btn dark" id="altGo">Contacter ALT</button></div></div>`;
   $("#altGo").onclick=()=>altModal({});
 }
@@ -4404,7 +4404,6 @@ function altModal(p={}){
     <div><label class="l">Format</label>${evtSelect("format",p.format||"")}</div>
     <div><label class="l">Présentez le projet *</label><textarea name="description" required placeholder="Qui vous êtes, ce que vous faites, pourquoi c’est important pour vous…"></textarea></div>
     <div><label class="l">Liens (Instagram, son, vidéo, visuels)</label><input type="text" name="liens"></div>
-    <div><label class="l">Ce que vous aimeriez</label>${checks("formats",ALT_FORMATS,[])}</div>
     ${me?"":`<div><label class="l">Votre e-mail *</label><input type="email" name="email" required></div>`}
     <div class="row-btns"><button class="btn dark" type="submit">Envoyer à ALT</button><button class="btn" type="button" data-close>Annuler</button></div>
   </form>`);
