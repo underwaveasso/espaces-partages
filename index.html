@@ -4946,11 +4946,12 @@ const Live = !LIVE ? null : (()=>{
 
     async saveLieuAsync(l){
       l.photos = await uploadPhotos(l.photos);
+      const isNew = !!l._new || !l.id;   // à lire avant saveLieu, qui retire ce repère
       const saved = demo.saveLieu(l);
       const row = toLieu(saved);
-      if(l._new) await run("enregistrement du lieu", sb.from("lieux").insert(row));
+      if(isNew) await run("enregistrement du lieu", sb.from("lieux").insert(row));
       else { const { id, owner, status, motif, ...rest } = row; await run("enregistrement du lieu", sb.from("lieux").update(rest).eq("id",id)); }
-      await run("adresse", sb.from("lieux_adresses").upsert({ lieu_id:saved.id, adresse:saved.adresse||"", lat:saved.lat||null, lng:saved.lng||null }));
+      if(saved.adresse || !isNew) await run("adresse", sb.from("lieux_adresses").upsert({ lieu_id:saved.id, adresse:saved.adresse||"", lat:saved.lat||null, lng:saved.lng||null }));
       return saved;
     },
     setStatus(id,status,motif){ demo.setStatus(id,status,motif); bg("statut du lieu", sb.from("lieux").update({ status, motif:motif||"" }).eq("id",id)); },
