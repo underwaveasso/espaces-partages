@@ -4761,14 +4761,14 @@ function viewNewPassword(){
 }
 
 /* ---------- Mentions légales ---------- */
-const ASSO = { nom:"Underwave", forme:"Association loi 1901", rna:"[numéro RNA à compléter]", siege:"[adresse du siège à compléter], Marseille", directeur:"[nom de la présidente ou du président à compléter], présidente ou président de l’association" };
+const ASSO = { nom:"Underwave", forme:"association loi 1901", siege:"Marseille", directeur:"L. Brisot, présidente de l’association" };
 function viewMentions(){
   $("#app").innerHTML=`
   <div class="page-head g"><span class="kicker">Espaces Partagés</span><h1>Mentions légales</h1></div>
   <div class="wrap g regles"><div></div><div>
-    <section><h2>Éditeur du site</h2><p>${ASSO.nom}, ${ASSO.forme}<br>Numéro RNA : ${ASSO.rna}<br>Siège : ${ASSO.siege}<br>Contact : ${CONTACT}</p></section>
+    <section><h2>Éditeur du site</h2><p>${ASSO.nom}, ${ASSO.forme}<br>Siège : ${ASSO.siege}<br>Contact : ${CONTACT}</p></section>
     <section><h2>Directeur·ice de la publication</h2><p>${ASSO.directeur}</p></section>
-    <section><h2>Hébergement</h2><p>Site : GitHub Pages, service de GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.<br>Base de données, comptes et e-mails : [nom, adresse et téléphone du prestataire à compléter à la mise en ligne].</p></section>
+    <section><h2>Hébergement</h2><p>Site : GitHub Pages, service de GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis, +1 877 448 4820.<br>Base de données, comptes et e-mails : Supabase Pte. Ltd., 65 Chulia Street #38-02/03, OCBC Centre, Singapour 049513. Les données sont hébergées dans l’Union européenne (Irlande).</p></section>
     <section><h2>Contenus publiés par les utilisateur·ices</h2><p>Les fiches de lieux, annonces, récits et messages sont publiés par les utilisateur·ices sous leur responsabilité. Underwave les vérifie avant publication et peut les refuser ou les retirer à tout moment (voir les <a href="#regles">valeurs et règles</a>). Pour signaler un contenu : bouton « Signaler » sur le site, ou ${CONTACT}.</p></section>
     <section><h2>Crédits</h2><p>Fonds de carte : © les contributeur·ices d’OpenStreetMap. Typographie : Inter Tight (licence SIL Open Font).</p></section>
   </div></div>`;
@@ -4794,7 +4794,7 @@ function confHTML(){ return `
       <li><b>Statistiques</b> (nombre de lieux, de demandes, répartition dans la ville) : intérêt légitime à suivre et présenter le projet, sur des chiffres qui ne permettent pas d’identifier les personnes.</li>
     </ul></section>
     <section><h2>Qui y a accès</h2><p>Les membres de l’équipe Underwave chargé·es du répertoire, et nos prestataires techniques (hébergement, base de données, envoi d’e-mails), uniquement pour faire fonctionner le service. Vos données ne sont ni vendues, ni louées, ni cédées. Les messages privés ne sont pas consultés par l’équipe, sauf si une conversation est jointe à un signalement.</p>
-    <p>Le site est hébergé par GitHub (États-Unis). Ce transfert est encadré par les garanties prévues par le RGPD. Les données des comptes sont hébergées [dans l’Union européenne : à confirmer à la mise en ligne].</p></section>
+    <p>Le site est hébergé par GitHub (États-Unis). Ce transfert est encadré par les garanties prévues par le RGPD. Les données des comptes (base de données, photos, e-mails) sont hébergées dans l’Union européenne (Irlande), par Supabase.</p></section>
     <section><h2>Durée de conservation</h2><ul>
       <li>Compte et contenus : tant que le compte est actif. Un compte inactif depuis 3 ans est supprimé, après un e-mail de prévenance.</li>
       <li>Annonces : en ligne 3 mois, puis archivées et supprimées au bout d’un an.</li>
