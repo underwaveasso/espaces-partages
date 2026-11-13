@@ -3643,7 +3643,7 @@ let map=null;
 
 function renderNav(route){
   const me=DB.me(); const n=DB.lieux().length; const un=DB.unread();
-  const links=[["lieux",`Lieux<span class="n">${n}</span>`],["annonces","Annonces"],["a-propos","À propos"]];
+  const links=[["lieux",`Lieux${n?`<span class="n">${n}</span>`:""}`],["annonces","Annonces"],["a-propos","À propos"]];
   const acts=[["proposer","Proposer un lieu +","cta"]];
   if(me){ acts.push(["messages",`Messages${un?`<span class="badge-dot">${un}</span>`:""}`]); acts.push(["compte",esc(shortName(me))]); if(me.admin) acts.push(["admin","Gestion"]); }
   else acts.push(["connexion","Connexion"]);
@@ -4355,7 +4355,7 @@ function viewMessages(){
   const t=DB.thread(state.thread); DB.markRead(t.id); const {other,l,about}=threadInfo(t);
   const iAmHost=t.request&&t.to===me.id; const ok=t.status==="acceptee";
   $("#app").innerHTML=`
-  <div class="page-head g" style="padding-bottom:14px"><span class="kicker">Messages</span><h1>Vos échanges</h1><p class="note-msg">Les nouveaux messages ne sont pas encore signalés par e-mail : pensez à revenir consulter vos échanges.</p></div>
+  <div class="page-head g" style="padding-bottom:14px"><span class="kicker">Messages</span><h1>Vos échanges</h1><p class="note-msg">Vous êtes prévenu·e par e-mail à chaque nouvelle conversation.</p></div>
   <div class="inbox">
     <div class="threads">${ts.map(x=>{ const tt=threadInfo(x); const last=x.messages[x.messages.length-1]; const unread=last&&last.from!==me.id&&(!x.read[me.id]||x.read[me.id]<last.at);
       return `<button class="thread ${x.id===t.id?"on":""}" data-t="${x.id}"><b>${esc(shortName(tt.other)||"Compte supprimé")}${unread?'<span class="badge-dot">•</span>':""} ${statusPill(x)}</b><small>${esc(tt.about)}</small><br><small>${esc((last?.text||"").slice(0,60))}</small></button>`; }).join("")}</div>
