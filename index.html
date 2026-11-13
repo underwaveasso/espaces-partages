@@ -975,7 +975,8 @@ footer a{text-decoration:underline}
 .share .url{font-size:14px;word-break:break-all;user-select:all}
 @media (max-width:600px){.share{grid-template-columns:1fr}.share .qr{max-width:200px}}
 .consent{display:grid;gap:10px}
-.consent label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.consent label{display:block;position:relative;padding-left:26px;cursor:pointer}
+.consent label>input{position:absolute;left:0;top:.2em;margin:0}
 .consent input{margin-top:4px;flex:none}
 details.mail{border:1px solid var(--line);border-radius:12px;margin-bottom:8px;background:var(--white)}
 details.mail summary{cursor:pointer;padding:12px 14px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -1100,7 +1101,7 @@ table.adm th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-w
 <footer>
   <div>
     <div>Espaces Partagés est un projet porté par l’association Underwave.</div>
-    <div style="margin-top:6px"><a href="#a-propos">À propos</a> · <a href="#regles">Valeurs et règles</a> · <a href="#ne-ici">Né ici</a> · <a href="#partager" id="lkShare">Partager le projet</a> · <a href="#alt">Parler de son projet sur ALT</a> · <a href="https://underwave.fr/" target="_blank" rel="noopener">Site Underwave</a> · <a href="https://www.instagram.com/underwaveconcept/" target="_blank" rel="noopener">Instagram</a><br><a href="#mentions-legales">Mentions légales</a> · <a href="#confidentialite">Confidentialité</a> · Contact : underwave.asso@gmail.com</div>
+    <div style="margin-top:6px"><a href="#a-propos">À propos</a> · <a href="#regles">Charte</a> · <a href="#ne-ici">Né ici</a> · <a href="#partager" id="lkShare">Partager le projet</a> · <a href="#alt">Parler de son projet sur ALT</a> · <a href="https://underwave.fr/" target="_blank" rel="noopener">Site Underwave</a> · <a href="https://www.instagram.com/underwaveconcept/" target="_blank" rel="noopener">Instagram</a><br><a href="#mentions-legales">Mentions légales</a> · <a href="#confidentialite">Confidentialité</a> · Contact : underwave.asso@gmail.com</div>
   </div>
   <span class="mark" aria-label="Underwave"></span>
 </footer>
@@ -3587,10 +3588,10 @@ const motifTxt = m => (m ? `\n\nMotif : ${m}` : "") + `\n\nVous pouvez contester
 const MAILS = {
   lieuPublie:l=>({sujet:`Votre lieu « ${l.nom} » est en ligne`,texte:`Bonjour,\n\nBonne nouvelle : la fiche de votre lieu « ${l.nom} » a été validée et apparaît maintenant dans le répertoire Espaces Partagés. Les demandes des porteur·ses de projets arriveront dans votre messagerie sur le site.\n\nVous pouvez aussi publier vos créneaux libres dans la rubrique Annonces.`+SIGN}),
   lieuRefuse:(l,m)=>({sujet:`Votre proposition de lieu « ${l.nom} »`,texte:`Bonjour,\n\nMerci d’avoir proposé votre lieu « ${l.nom} ». Après vérification, l’équipe Underwave n’a pas pu le publier dans le répertoire Espaces Partagés.`+motifTxt(m)+`\n\nVous pouvez modifier votre fiche depuis votre compte et nous écrire si vous souhaitez en discuter.`+SIGN}),
-  lieuRetire:(l,m)=>({sujet:`Votre lieu « ${l.nom} » a été retiré d’Espaces Partagés`,texte:`Bonjour,\n\nNous vous informons que votre lieu « ${l.nom} » a été retiré du répertoire Espaces Partagés. Il n’est plus visible sur le site et ne peut plus recevoir de demandes.\n\nComme indiqué dans les valeurs et règles du répertoire, Underwave peut retirer un lieu, notamment en cas de signalements concordants indiquant des difficultés répétées ou de non-conformité aux valeurs du répertoire.`+motifTxt(m)+SIGN}),
+  lieuRetire:(l,m)=>({sujet:`Votre lieu « ${l.nom} » a été retiré d’Espaces Partagés`,texte:`Bonjour,\n\nNous vous informons que votre lieu « ${l.nom} » a été retiré du répertoire Espaces Partagés. Il n’est plus visible sur le site et ne peut plus recevoir de demandes.\n\nComme indiqué dans la charte du répertoire, Underwave peut retirer un lieu, notamment en cas de signalements concordants indiquant des difficultés répétées ou de non-conformité à la charte du répertoire.`+motifTxt(m)+SIGN}),
   annonceRefusee:(a,m)=>({sujet:`Votre annonce « ${a.titre} »`,texte:`Bonjour,\n\nVotre annonce « ${a.titre} » n’a pas été publiée sur Espaces Partagés.`+motifTxt(m)+`\n\nVous pouvez publier une nouvelle annonce depuis la rubrique Annonces.`+SIGN}),
   annonceRetiree:(a,m)=>({sujet:`Votre annonce « ${a.titre} » a été retirée`,texte:`Bonjour,\n\nVotre annonce « ${a.titre} » a été retirée d’Espaces Partagés par l’équipe Underwave.`+motifTxt(m)+SIGN}),
-  suspendu:(u,m)=>({sujet:`Votre compte Espaces Partagés a été suspendu`,texte:`Bonjour,\n\nVotre compte Espaces Partagés a été suspendu par l’équipe Underwave. Vous ne pouvez plus vous connecter, et vos lieux et annonces ne sont plus visibles sur le site.\n\nComme indiqué dans les valeurs et règles du répertoire, Underwave peut suspendre un compte en cas de signalements concordants, de contenu contraire aux valeurs du répertoire ou de non-respect des règles.`+motifTxt(m)+SIGN}),
+  suspendu:(u,m)=>({sujet:`Votre compte Espaces Partagés a été suspendu`,texte:`Bonjour,\n\nVotre compte Espaces Partagés a été suspendu par l’équipe Underwave. Vous ne pouvez plus vous connecter, et vos lieux et annonces ne sont plus visibles sur le site.\n\nComme indiqué dans la charte du répertoire, Underwave peut suspendre un compte en cas de signalements concordants ou de contenu contraire à la charte du répertoire.`+motifTxt(m)+SIGN}),
   reactive:u=>({sujet:`Votre compte Espaces Partagés est réactivé`,texte:`Bonjour,\n\nVotre compte Espaces Partagés a été réactivé. Vous pouvez de nouveau vous connecter.`+SIGN}),
 };
 
@@ -3937,7 +3938,7 @@ function viewAccueil(){
       </div>
     </div>
   </section>
-  <section class="valeurs g"><span class="kicker">Nos valeurs</span><p>Espaces Partagés est un outil associatif porté par Underwave, au service du bien commun. Antiraciste, féministe, queer et antifasciste, il rassemble les lieux et les projets qui partagent ces valeurs. Ceux qui les contredisent, ou qui font l’objet de signalements pour violences ou discriminations, n’y ont pas leur place.</p><a class="btn" href="#regles">Lire nos valeurs et nos règles</a></section>`;
+  <section class="valeurs g"><span class="kicker">Notre charte</span><p>Espaces Partagés est un outil associatif porté par Underwave, au service du bien commun. Antiraciste, féministe, queer et antifasciste, il rassemble les lieux et les projets qui partagent ces valeurs. Ceux qui les contredisent, ou qui font l’objet de signalements pour violences ou discriminations, n’y ont pas leur place.</p><a class="btn" href="#regles">Lire la charte</a></section>`;
   $$("[data-scroll]").forEach(x=>x.onclick=e=>{ e.preventDefault(); document.getElementById(x.dataset.scroll).scrollIntoView({behavior:"smooth"}); });
   startPlan($("#app .hero2 .ep-map"));
   const cp=$("#ep-copy"); if(cp) cp.onclick=async()=>{ const u=SITE_URL; try{ await navigator.clipboard.writeText(u); }catch(e){ const t=document.createElement("textarea"); t.value=u; document.body.appendChild(t); t.select(); try{ document.execCommand("copy"); }catch(_){} t.remove(); } const o=cp.textContent; cp.textContent="Lien copié ✓"; setTimeout(()=>cp.textContent=o,2000); };
@@ -4138,8 +4139,8 @@ function contactModal(l,prefill={}){
 function reportModal(l){ reportGeneric("lieu",l.id,`le lieu « ${l.nom} »`,"Informations erronées, lieu fermé, problème lors d’un événement, comportement d’une personne du lieu…"); }
 function reportGeneric(target,id,label,ph,threadId=null){
   if(!DB.me()) return needLogin("Il faut un compte pour envoyer un signalement : Underwave doit pouvoir vous recontacter.");
-  openModal(`<h2>Signaler ${esc(label)}</h2><p class="muted" style="margin-bottom:12px">Le signalement est transmis uniquement à Underwave, qui gère le répertoire. Il n’est jamais communiqué à la personne ou au lieu signalé. En cas de signalements concordants, Underwave peut retirer un lieu, une annonce ou suspendre un compte (<a href="#regles" data-regles>voir les règles</a>).</p>
-  <form class="f" id="repf"><div><label class="l">Type de problème</label><select name="cat"><option>Violences, harcèlement ou discriminations</option><option>Contraire aux valeurs du répertoire</option><option>Comportement irrespectueux ou engagement non tenu</option><option>Informations fausses ou trompeuses</option><option>Lieu fermé ou injoignable</option><option>Contenu illégal</option><option>Autre</option></select></div>
+  openModal(`<h2>Signaler ${esc(label)}</h2><p class="muted" style="margin-bottom:12px">Le signalement est transmis uniquement à Underwave, qui gère le répertoire. Il n’est jamais communiqué à la personne ou au lieu signalé. En cas de signalements concordants, Underwave peut retirer un lieu, une annonce ou suspendre un compte (<a href="#regles" data-regles>voir la charte</a>).</p>
+  <form class="f" id="repf"><div><label class="l">Type de problème</label><select name="cat"><option>Violences, harcèlement ou discriminations</option><option>Contraire à la charte du répertoire</option><option>Comportement irrespectueux ou engagement non tenu</option><option>Informations fausses ou trompeuses</option><option>Lieu fermé ou injoignable</option><option>Contenu illégal</option><option>Autre</option></select></div>
   <textarea name="text" required placeholder="${esc(ph)}"></textarea>
   ${threadId?`<div class="consent"><label><input type="checkbox" name="joindre" value="1"> Joindre cette conversation au signalement. Underwave pourra la lire, uniquement pour traiter le signalement.</label></div>`:""}
   <div class="row-btns"><button class="btn dark" type="submit">Envoyer à Underwave</button><button class="btn" type="button" data-close>Annuler</button></div></form>`);
@@ -4220,7 +4221,7 @@ function viewProposer(editId){
         <div><label class="l">Contact affiché</label><input type="text" name="contactPublic" value="${esc(l.contactPublic||"")}" placeholder="Facultatif"></div></div>
       <div class="hint" style="margin-top:8px">Les demandes passent par la messagerie du site : vous n’êtes pas obligé·e d’afficher un e-mail ou un téléphone.</div>
     </fieldset>
-    ${editId?"":`<div class="consent"><label><input type="checkbox" required> Mon lieu partage les <a href="#regles" data-regles>valeurs d’Espaces Partagés</a> : il n’accueille aucun événement d’extrême droite, raciste, sexiste, LGBTQIAphobe ou discriminant, et agit contre les violences sexistes et sexuelles. *</label></div>`}
+    ${editId?"":`<p class="hint">En envoyant cette fiche, vous confirmez que votre lieu respecte la <a href="#regles" data-regles>charte</a> d’Espaces Partagés : il n’accueille aucun événement d’extrême droite, raciste, sexiste, LGBTQIAphobe ou discriminant, et agit contre les violences sexistes et sexuelles.</p>`}
     <p class="err" id="lerr"></p>
     <div class="row-btns"><button class="btn pink" type="submit">${editId?"Enregistrer":"Envoyer ma fiche"}</button>${editId?`<a class="btn" href="#lieu-${l.id}">Annuler</a><button class="btn" type="button" id="del">Retirer ma fiche</button>`:""}</div>
   </form></div>
@@ -4318,7 +4319,7 @@ function annonceModal(kind,prefill={}){
       <div><label class="l">Secteur</label><select name="secteur"><option>Peu importe</option>${Object.keys(SECTEURS).map(s=>`<option ${prefill.secteur===s?"selected":""}>${s}</option>`).join("")}</select></div></div>`}
     <div><label class="l">${cr?"Détails":"Besoins"}</label><textarea name="besoins" placeholder="${cr?"Équipement disponible, ce que vous aimeriez accueillir…":"Son, lumière, murs, accès PMR, bar…"}"></textarea></div>
     <div><label class="l">Conditions ${cr?"proposées":"possibles"}</label>${checks("conditions",CONDITIONS,prefill.conditions||[])}</div>
-    <div class="consent"><label><input type="checkbox" required> ${cr?"Ce créneau":"Mon projet"} respecte les <a href="#regles" data-regles>valeurs d’Espaces Partagés</a>. *</label></div>
+    <p class="hint">En envoyant, vous confirmez que ${cr?"ce créneau":"votre projet"} respecte la <a href="#regles" data-regles>charte</a> d’Espaces Partagés.</p>
     <p class="hint">L’annonce est vérifiée par Underwave avant publication et reste en ligne trois mois.</p>
     <div class="row-btns"><button class="btn pink" type="submit">Envoyer</button><button class="btn" type="button" data-close>Annuler</button></div>
   </form>`);
@@ -4448,11 +4449,8 @@ function viewConnexion(signup=false){
     <div id="profilBox"><label class="l">Profil</label><select name="profil">${PROFILS.map(p=>`<option>${p}</option>`).join("")}</select></div>
     <div class="two"><div><label class="l">E-mail *</label><input type="email" name="email" required autocomplete="email"></div>
     <div><label class="l">Mot de passe *</label><input type="password" name="password" required minlength="8" autocomplete="new-password"><div class="hint">8 caractères minimum.</div></div></div>
-    <div class="consent">
-      <label><input type="checkbox" name="charte" required> J’ai lu et j’accepte <a href="#regles" data-regles>les valeurs, le fonctionnement et les règles</a> d’Espaces Partagés, ainsi que la <a href="#confidentialite" data-conf>politique de confidentialité</a>. J’ai 18 ans ou plus, ou je m’inscris au nom d’une structure avec l’accord d’un·e adulte responsable. *</label>
-      <label><input type="checkbox" name="newsletter" value="1"> J’accepte de recevoir des nouvelles d’Underwave et d’ALT par e-mail (événements, appels à projets, nouveautés du répertoire). Facultatif, désinscription à tout moment.</label>
-    </div>
     <p class="err" id="serr"></p>
+    <p class="hint">En créant un compte, vous acceptez la <a href="#regles" data-regles>charte</a> d’Espaces Partagés et sa <a href="#confidentialite" data-conf>politique de confidentialité</a>, et vous confirmez avoir 18 ans ou plus, ou agir au nom d’une structure avec l’accord d’un·e adulte responsable.</p>
     <div class="row-btns"><button class="btn pink" type="submit">Créer mon compte</button><a class="btn" href="#connexion">J’ai déjà un compte</a></div>
   </form>`:`
   <form class="f" id="lgf" style="max-width:480px">
@@ -4468,7 +4466,7 @@ function viewConnexion(signup=false){
     const sync=()=>{ $("#profilBox").hidden=$("#sgf").role.value==="lieu"; }; $$('#sgf input[name=role]').forEach(r=>r.onchange=sync); sync();
     $("#sgf").onsubmit=async e=>{ e.preventDefault(); const fd=Object.fromEntries(new FormData(e.target));
       const b=e.target.querySelector("button[type=submit]"); b.disabled=true;
-      try{ const u=await DB.signup({...fd,newsletter:fd.newsletter==="1",profil:fd.role==="lieu"?"":fd.profil});
+      try{ const u=await DB.signup({...fd,newsletter:true,profil:fd.role==="lieu"?"":fd.profil});
         if(u&&u.pending){ $("#app").innerHTML=`<div class="page-head g"><span class="kicker">Presque fini</span><h1>Confirmez votre adresse e-mail</h1><p>Un e-mail vient d’être envoyé à ${esc(fd.email)}. Cliquez sur le lien qu’il contient pour activer votre compte, puis connectez-vous. Pensez à regarder dans les indésirables.</p><div class="row-btns" style="margin-top:20px"><a class="btn dark" href="#connexion">Se connecter</a></div></div>`; return; }
         toast("Bienvenue "+u.name+" !"); go(u.role==="lieu"?"proposer":"accueil"); }catch(err){ $("#serr").textContent=err.message; b.disabled=false; } };
   } else {
@@ -4495,7 +4493,7 @@ function viewCompte(){
         ${me.role!=="lieu"?`<div><label class="l">Profil</label><select name="profil">${PROFILS.map(p=>`<option ${me.profil===p?"selected":""}>${p}</option>`).join("")}</select></div>`:""}
         <div><label class="l">Présentation</label><textarea name="bio" placeholder="Qui vous êtes, ce que vous faites. Les lieux la voient quand vous les contactez.">${esc(me.bio||"")}</textarea></div>
         <div><label class="l">Projets passés, liens</label><input type="text" name="liens" value="${esc(me.liens||"")}" placeholder="Instagram, site, son, photos de vos événements…"><div class="hint">Ça rassure les lieux et les aide à dire oui.</div></div>
-        <div class="consent"><label><input type="checkbox" name="newsletter" value="1" ${me.newsletter?"checked":""}> Recevoir des nouvelles d’Underwave et d’ALT par e-mail</label></div>
+        <div class="consent"><label><input type="checkbox" name="newsletter" value="1" ${me.newsletter?"checked":""}> Recevoir des nouvelles d’Underwave et d’ALT par e-mail</label></div><div class="hint">Activé à l’inscription. Décochez pour vous désabonner.</div>
         <div class="hint">Votre e-mail sert aussi aux messages liés à votre compte (validation ou retrait d’une fiche, par exemple). Voir la <a href="#confidentialite">politique de confidentialité</a>.</div>
         <div class="row-btns"><button class="btn dark" type="submit">Enregistrer</button><button class="btn" type="button" id="out">Se déconnecter</button><button class="btn" type="button" id="delMe">Supprimer mon compte</button></div>
       </div></fieldset>
@@ -4613,7 +4611,7 @@ function viewAdmin(){
     box.innerHTML=`
     <section class="adsec"><h2>Inscrit·es</h2>
       <div class="facts" style="margin-top:0"><div><b>Comptes</b><span>${us.length}</span></div><div><b>Lieux</b><span>${us.filter(u=>u.role==="lieu").length}</span></div><div><b>Porteur·ses de projets</b><span>${us.filter(u=>u.role!=="lieu").length}</span></div><div><b>Acceptent les nouvelles</b><span>${nl.length}</span></div></div>
-      <p class="muted" style="margin:10px 0">Pour une newsletter ou des nouvelles d’Underwave et d’ALT, utilisez uniquement la liste des personnes qui ont accepté (case cochée à l’inscription ou dans leur compte). Les autres adresses servent seulement aux messages liés au compte.</p>
+      <p class="muted" style="margin:10px 0">Pour une newsletter ou des nouvelles d’Underwave et d’ALT, utilisez uniquement la liste des personnes abonnées (inscrites par défaut, sauf si elles se sont désabonnées depuis leur compte). Les autres adresses servent seulement aux messages liés au compte.</p>
       <div class="row-btns"><button class="btn dark" id="cpNl">Copier les e-mails « nouvelles » (${nl.length})</button><button class="btn" id="cpAll">Copier tous les e-mails</button><a class="btn" id="csv" download="espaces-partages-inscrits.csv" href="#">Télécharger le tableau (CSV)</a></div>
     </section>
     <section class="adsec"><h2>E-mails automatiques envoyés (${ob.length})</h2>
@@ -4652,7 +4650,7 @@ function viewAPropos(){
     <div class="lead">
       <p>Espaces Partagés est un projet porté par l’association Underwave. Il facilite la rencontre entre les lieux marseillais qui souhaitent accueillir des initiatives culturelles, sociales et associatives, et les artistes, collectifs, associations et habitant·es qui cherchent un espace pour les faire exister.</p>
       <p>Le répertoire est gratuit et collaboratif. Les lieux y présentent ce qu’ils peuvent accueillir et à quelles conditions. Les porteur·ses de projets y cherchent un espace ou publient une annonce. Puis chacun se contacte directement, sans intermédiaire.</p>
-      <div class="row-btns" style="margin-top:20px"><a class="btn dark" href="#lieux">Parcourir les lieux</a><a class="btn pink" href="#proposer">Référencer un lieu</a><a class="btn" href="#regles">Valeurs et fonctionnement</a></div>
+      <div class="row-btns" style="margin-top:20px"><a class="btn dark" href="#lieux">Parcourir les lieux</a><a class="btn pink" href="#proposer">Référencer un lieu</a><a class="btn" href="#regles">Charte</a></div>
     </div>
     <div>
       <section><h2>Pourquoi ce projet ?</h2><p>À Marseille, de nombreuses initiatives indépendantes participent activement à la vie culturelle et sociale : concerts, expositions, DJ sets, performances, ateliers, projections, marchés de créateur·ices, rencontres ou formats hybrides.</p><p>Pourtant, trouver un espace adapté et entrer en contact avec des lieux ouverts à ces propositions reste souvent compliqué : manque de visibilité, informations dispersées, interlocuteurs difficiles à identifier.</p><p>De leur côté, de nombreux lieux (bars, restaurants, commerces, galeries, centres sociaux, espaces associatifs ou hybrides) souhaitent faire vivre leurs espaces, sans toujours savoir comment se connecter aux porteur·ses de projets.</p><p>Espaces Partagés répond à ce besoin commun : rendre la mise en relation plus simple, plus lisible et plus directe.</p></section>
@@ -4670,9 +4668,9 @@ function viewAPropos(){
 }
 
 /* ---------- Fonctionnement, valeurs et règles ---------- */
-const MOTIFS = ["Contraire aux valeurs et à la charte","Signalements concordants","Violences, harcèlement ou discriminations signalés","Informations fausses ou trompeuses","Lieu fermé ou injoignable","Projet commercial, publicitaire ou hors sujet","Contenu illégal","Autre"];
+const MOTIFS = ["Contraire à la charte","Signalements concordants","Violences, harcèlement ou discriminations signalés","Informations fausses ou trompeuses","Lieu fermé ou injoignable","Projet commercial, publicitaire ou hors sujet","Contenu illégal","Autre"];
 function reglesHTML(){ return `
-  <div class="page-head g"><span class="kicker">Espaces Partagés</span><h1>Valeurs, fonctionnement et règles</h1><p>Ce que défend le répertoire, ce qu’il fait et ne fait pas, et les règles que chacun·e accepte en créant un compte.</p></div>
+  <div class="page-head g"><span class="kicker">Espaces Partagés</span><h1>Charte d’Espaces Partagés</h1><p>Ce que défend le répertoire, ce qu’il fait et ne fait pas, et les règles que chacun·e accepte en créant un compte.</p></div>
   <div class="wrap g regles">
     <nav class="toc">${[["r1","1. Le principe"],["r2","2. Nos valeurs"],["r3","3. Comment ça marche"],["r4","4. Le rôle d’Underwave"],["r5","5. Les règles"],["r6","6. Signalements, retraits et suspensions"],["r7","7. Organiser dans les règles"],["r8","8. Vos données"],["r9","9. Contact"]].map(([k,t])=>`<a href="#regles-${k}">${t}</a>`).join("")}<a href="#mentions-legales">Mentions légales</a><a href="#confidentialite">Politique de confidentialité</a></nav>
     <div>
@@ -4696,7 +4694,7 @@ function reglesHTML(){ return `
       <p>Underwave apprécie seule si un lieu, une annonce ou un projet est conforme à ces valeurs, et peut refuser ou retirer toute publication qui ne l’est pas.</p></section>
     <section id="r3"><h2>3. Comment ça marche</h2>
       <ol>
-        <li><b>On crée un compte</b>, gratuit, en tant que lieu ou porteur·se de projet, en acceptant ces valeurs et ces règles.</li>
+        <li><b>On crée un compte</b>, gratuit, en tant que lieu ou porteur·se de projet, en acceptant cette charte et ces règles.</li>
         <li><b>Les lieux publient leur fiche</b> : ce qu’ils peuvent accueillir, leurs équipements, leurs conditions (gratuit, partage des recettes, location…). Ils peuvent aussi publier des créneaux libres.</li>
         <li><b>Les porteur·ses de projets cherchent un lieu</b> ou publient une annonce « Je cherche un lieu pour… ». Les annonces restent en ligne trois mois.</li>
         <li><b>Underwave vérifie chaque fiche, annonce et récit</b> avant publication.</li>
@@ -4743,7 +4741,7 @@ function reglesHTML(){ return `
         <li><b>Prévention</b> : prévoir une personne référente contre les violences sexistes et sexuelles, et savoir à qui s’adresser en cas de problème.</li>
       </ul></section>
     <section id="r8"><h2>8. Vos données</h2>
-      <p>Underwave collecte seulement ce dont le répertoire a besoin, ne revend rien et n’utilise aucun traceur publicitaire. Votre e-mail n’est jamais affiché publiquement. Les nouvelles d’Underwave et d’ALT ne vous sont envoyées que si vous l’avez accepté. Vous pouvez supprimer votre compte à tout moment depuis la page « Mon compte ».</p>
+      <p>Underwave collecte seulement ce dont le répertoire a besoin, ne revend rien et n’utilise aucun traceur publicitaire. Votre e-mail n’est jamais affiché publiquement. Vous recevez les nouvelles d’Underwave et d’ALT, et vous pouvez vous en désabonner à tout moment depuis votre compte ou depuis chaque envoi. Vous pouvez supprimer votre compte à tout moment depuis la page « Mon compte ».</p>
       <p>Tout est détaillé dans la <a href="#confidentialite">politique de confidentialité</a>.</p></section>
     <section id="r9"><h2>9. Contact</h2>
       <p>Pour toute question sur le répertoire, une fiche, une décision ou vos données : <b style="font-weight:500">${CONTACT}</b>.</p></section>
@@ -4769,7 +4767,7 @@ function viewMentions(){
     <section><h2>Éditeur du site</h2><p>${ASSO.nom}, ${ASSO.forme}<br>Siège : ${ASSO.siege}<br>Contact : ${CONTACT}</p></section>
     <section><h2>Directeur·ice de la publication</h2><p>${ASSO.directeur}</p></section>
     <section><h2>Hébergement</h2><p>Site : GitHub Pages, service de GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis, +1 877 448 4820.<br>Base de données, comptes et e-mails : Supabase Pte. Ltd., 65 Chulia Street #38-02/03, OCBC Centre, Singapour 049513. Les données sont hébergées dans l’Union européenne (Irlande).</p></section>
-    <section><h2>Contenus publiés par les utilisateur·ices</h2><p>Les fiches de lieux, annonces, récits et messages sont publiés par les utilisateur·ices sous leur responsabilité. Underwave les vérifie avant publication et peut les refuser ou les retirer à tout moment (voir les <a href="#regles">valeurs et règles</a>). Pour signaler un contenu : bouton « Signaler » sur le site, ou ${CONTACT}.</p></section>
+    <section><h2>Contenus publiés par les utilisateur·ices</h2><p>Les fiches de lieux, annonces, récits et messages sont publiés par les utilisateur·ices sous leur responsabilité. Underwave les vérifie avant publication et peut les refuser ou les retirer à tout moment (voir la <a href="#regles">charte</a>). Pour signaler un contenu : bouton « Signaler » sur le site, ou ${CONTACT}.</p></section>
     <section><h2>Crédits</h2><p>Fonds de carte : © les contributeur·ices d’OpenStreetMap. Typographie : Inter Tight (licence SIL Open Font).</p></section>
   </div></div>`;
 }
@@ -4785,12 +4783,12 @@ function confHTML(){ return `
       <li><b>Contenus</b> : fiches de lieux (dont l’adresse et les photos), annonces, récits « Né ici », demandes ALT.</li>
       <li><b>Messages</b> échangés avec d’autres comptes.</li>
       <li><b>Signalements</b> envoyés ou reçus, et décisions de l’équipe.</li>
-      <li><b>Choix « nouvelles »</b> : si vous acceptez de recevoir les nouvelles d’Underwave et d’ALT.</li>
+      <li><b>Choix « nouvelles »</b> : si vous êtes abonné·e aux nouvelles d’Underwave et d’ALT (oui par défaut).</li>
     </ul><p>Nous ne collectons aucune donnée de navigation à des fins de suivi, et n’utilisons aucun cookie publicitaire ou de mesure d’audience.</p></section>
     <section><h2>Pourquoi et sur quelle base</h2><ul>
       <li><b>Faire fonctionner le répertoire</b> (comptes, fiches, annonces, messagerie, e-mails liés au compte) : exécution du service que vous demandez en créant un compte.</li>
       <li><b>Modération et sécurité</b> (vérification des publications, signalements, retraits, suspensions) : intérêt légitime d’Underwave à protéger les personnes et à garder un répertoire conforme à ses valeurs, et obligations légales en matière de contenus en ligne.</li>
-      <li><b>Nouvelles d’Underwave et d’ALT</b> : votre consentement, que vous pouvez retirer à tout moment depuis votre compte ou via le lien de désinscription présent dans chaque envoi.</li>
+      <li><b>Nouvelles d’Underwave et d’ALT</b> : l’intérêt légitime de l’association à informer les membres du répertoire de ses activités. Vous pouvez vous y opposer à tout moment depuis votre compte ou via le lien de désinscription présent dans chaque envoi.</li>
       <li><b>Statistiques</b> (nombre de lieux, de demandes, répartition dans la ville) : intérêt légitime à suivre et présenter le projet, sur des chiffres qui ne permettent pas d’identifier les personnes.</li>
     </ul></section>
     <section><h2>Qui y a accès</h2><p>Les membres de l’équipe Underwave chargé·es du répertoire, et nos prestataires techniques (hébergement, base de données, envoi d’e-mails), uniquement pour faire fonctionner le service. Vos données ne sont ni vendues, ni louées, ni cédées. Les messages privés ne sont pas consultés par l’équipe, sauf si une conversation est jointe à un signalement.</p>
