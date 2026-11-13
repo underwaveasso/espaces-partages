@@ -1027,7 +1027,7 @@ details.mail pre{white-space:pre-wrap;font:inherit;font-size:14px;padding:0 14px
 .hero2 .btn.lime{border-color:var(--lime);color:#000}
 .hero2-stats{position:relative;z-index:1;display:flex;gap:10px 28px;flex-wrap:wrap;padding-block:18px 22px;font-size:15px}
 .hero2-stats b{color:var(--lime);font-weight:500;font-size:var(--mid)}
-.hero2.th-blanc,.hero2.th-lime,.hero2.th-rose{color:#000}.hero2.th-blanc .kicker,.hero2.th-lime .kicker,.hero2.th-rose .kicker{color:#000}.hero2.th-blanc .hero2-stats b,.hero2.th-lime .hero2-stats b{color:var(--magenta)}.hero2.th-rose .hero2-stats b{color:#fff}
+.hero2.th-blanc,.hero2.th-lime,.hero2.th-rose{color:#000}.hero2.th-blanc .kicker,.hero2.th-lime .kicker,.hero2.th-rose .kicker{color:#000}.hero2.th-blanc .hero2-stats b,.hero2.th-lime .hero2-stats b{color:var(--magenta)}.hero2.th-rose .hero2-stats b{color:#000}
 .hero2.th-blanc .hero2-stats a,.hero2.th-lime .hero2-stats a{color:var(--magenta)}.hero2.th-rose .hero2-stats a{color:#000}
 .hero2.th-lime .btn.lime{background:#000;border-color:#000;color:#fff}.hero2.th-rose .btn.pink{background:#000;border-color:#000;color:#fff}
 .recherche{padding-block:clamp(36px,6vw,72px);border-bottom:1px solid var(--line);background:var(--soft)}
@@ -3702,17 +3702,17 @@ function neIciCard(n){ const l=DB.lieu(n.lieu); const u=DB.user(n.by);
     <div class="foot"><span class="muted">${l?`<a href="#lieu-${l.id}">${esc(l.nom)}</a> · ${esc(l.arr)}`:""}${u?` · ${esc(shortName(u))}`:""}</span></div></article>`; }
 
 /* ---------- Plan de Marseille animé (Espaces Partagés) ----------
-   Le plan change de couleur (fond noir, blanc, jaune-vert, rose). Sur ses rues, deux points s'écrivent
+   Le plan change de couleur, dans la palette Underwave : fond noir (rues jaune-vert), blanc, jaune-vert ou rose (rues en noir transparent). Sur ses rues, deux points s'écrivent
    (bulles « … » puis messages), puis un petit événement s'allume au lieu : fête, stand-up ou expo.
    Une à deux scènes à la fois, réparties sur la carte et placées à l'écart des textes. */
 const PLAN_COULEURS = {
-  noir:  { mer:[0,0,0],       ville:[16,16,16],    rue:[222,254,82], voile:"0,0,0", texte:"#fff",
+  noir:  { mer:[0,0,0],       ville:[0,0,0],       rue:[222,254,82], force:1,  voile:"0,0,0", texte:"#fff",
            sc:{ dot:"#EA33D2", halo:"#000", bulleA:"#fff", encreA:"#000", trait:0, bulleB:"#EA33D2", encreB:"#fff", ink:"#fff", acc:"#EA33D2", spark:"#DEFE52", fond:"#000", onde:"234,51,210", confetti:["#DEFE52","#EA33D2","#fff"] } },
-  blanc: { mer:[255,255,255], ville:[238,238,234], rue:[130,130,130], voile:"255,255,255", texte:"#000",
+  blanc: { mer:[255,255,255], ville:[255,255,255], rue:[0,0,0],      force:.6, voile:"255,255,255", texte:"#000",
            sc:{ dot:"#EA33D2", halo:"#fff", bulleA:"#fff", encreA:"#000", trait:"#000", bulleB:"#EA33D2", encreB:"#fff", ink:"#000", acc:"#EA33D2", spark:"#EA33D2", fond:"#fff", onde:"234,51,210", confetti:["#EA33D2","#000","#DEFE52"] } },
-  lime:  { mer:[255,255,255], ville:[222,254,82],  rue:[150,170,40], voile:"222,254,82", texte:"#000",
+  lime:  { mer:[255,255,255], ville:[222,254,82],  rue:[0,0,0],      force:.5, voile:"222,254,82", texte:"#000",
            sc:{ dot:"#EA33D2", halo:"#fff", bulleA:"#fff", encreA:"#000", trait:"#000", bulleB:"#EA33D2", encreB:"#fff", ink:"#000", acc:"#EA33D2", spark:"#EA33D2", fond:"#fff", onde:"234,51,210", confetti:["#EA33D2","#000","#fff"] } },
-  rose:  { mer:[255,255,255], ville:[234,51,210],  rue:[150,20,135], voile:"234,51,210", texte:"#000",
+  rose:  { mer:[255,255,255], ville:[234,51,210],  rue:[0,0,0],      force:.5, voile:"234,51,210", texte:"#000",
            sc:{ dot:"#000", halo:"#fff", bulleA:"#fff", encreA:"#000", trait:"#000", bulleB:"#000", encreB:"#fff", ink:"#000", acc:"#fff", spark:"#DEFE52", fond:"#000", onde:"255,255,255", confetti:["#DEFE52","#000","#fff"] } },
 };
 function recolorPlan(img,th){
@@ -3721,7 +3721,7 @@ function recolorPlan(img,th){
   for(let i=0;i<d.length;i+=4){
     const gg=d[i+1],b=d[i+2];
     const sea=Math.max(0,Math.min(1,(b-90)/140));            // le bleu monte vers le blanc de la mer
-    const st=Math.max(0,Math.min(1,(250-gg)/90))*(1-sea);   // plus le vert baisse, plus c'est une rue
+    const st=Math.max(0,Math.min(1,(250-gg)/90))*(1-sea)*th.force; // plus le vert baisse, plus c'est une rue
     for(let k=0;k<3;k++){ const land=th.ville[k]*(1-st)+th.rue[k]*st; d[i+k]=Math.round(th.mer[k]*sea+land*(1-sea)); }
   }
   g.putImageData(id,0,0); return c;
@@ -3841,7 +3841,7 @@ function PlanAnime(cv,o){
     places=[]; for(let i=0;i<160&&v.length;i++) places.push(v[Math.random()*v.length|0]);
   }
   function veil(nom,a){
-    if(!o.voile||a<=0) return; const v=PLAN_COULEURS[nom].voile, f=nom==="noir"?[.72,.25,.6]:[.85,.3,.75];
+    if(!o.voile||a<=0) return; const v=PLAN_COULEURS[nom].voile, f=nom==="noir"?[.62,.2,.5]:[.55,.12,.45];
     ctx.save(); ctx.globalAlpha=a;
     if(W<760) ctx.fillStyle="rgba("+v+","+f[2]+")";
     else { const gr=ctx.createLinearGradient(0,0,W,0); gr.addColorStop(0,"rgba("+v+","+f[0]+")"); gr.addColorStop(.55,"rgba("+v+","+f[1]+")"); gr.addColorStop(1,"rgba("+v+",0)"); ctx.fillStyle=gr; }
