@@ -4829,6 +4829,14 @@ $("#menuBtn").onclick=()=>{ const o=document.body.classList.toggle("menu-open");
    (validation, droits de l'équipe, messages privés).
    ========================================================= */
 const Live = !LIVE ? null : (()=>{
+  /* Retour d'un lien reçu par e-mail (confirmation, mot de passe oublié) : Supabase ajoute les jetons
+     à la fin de l'adresse. On remet l'adresse au propre avant que Supabase la lise, et on gère les liens expirés. */
+  (()=>{ const h=location.hash, i=h.search(/#(access_token|error)=/); if(i>0) history.replaceState(history.state,"",location.pathname+location.search+h.slice(i)); })();
+  if(/[#&]error_code=/.test(location.hash)){
+    const msg=/otp_expired/.test(location.hash)?"Ce lien a expiré ou a déjà servi. Demandez-en un nouveau.":"Ce lien n’est pas valide. Demandez-en un nouveau.";
+    history.replaceState(history.state,"",location.pathname+location.search+"#connexion");
+    setTimeout(()=>toast(msg),1200);
+  }
   const sb = window.supabase.createClient(CONFIG.supabaseUrl, CONFIG.supabaseKey, { auth:{ persistSession:true, autoRefreshToken:true, detectSessionInUrl:true } });
   const demo = { ...DB };
   const iso = v => v || now();
@@ -4932,7 +4940,7 @@ const Live = !LIVE ? null : (()=>{
       await sync(); if(!DB.me()) throw new Error("Ce compte a été suspendu par Underwave. Pour en parler, écrivez à l’association.");
       return DB.me();
     },
-    async resetPassword(email){ const { error } = await sb.auth.resetPasswordForEmail(email.trim(), { redirectTo: SITE_URL+"#nouveau-mdp" }); if(error) throw new Error(error.message); },
+    async resetPassword(email){ const { error } = await sb.auth.resetPasswordForEmail(email.trim(), { redirectTo: SITE_URL }); if(error) throw new Error(error.message); },
     async newPassword(pw){ const { error } = await sb.auth.updateUser({ password:pw }); if(error) throw new Error(error.message); },
     async logout(){ await sb.auth.signOut(); await sync(); },
     async deleteMe(){ await run("suppression du compte", sb.rpc("delete_my_account")); await sb.auth.signOut(); await sync(); },
